@@ -22,6 +22,6 @@ RUN tar -xzf workbench.tar.gz
 RUN cd scap-workbench*	;\
 	mkdir build/	;\
 	cd build/	;\
-	mingw32-cmake ../	;\
+	mingw32-cmake -D SCAP_WORKBENCH_LOCAL_SCAN_ENABLED=false -D SCAP_AS_RPM_EXECUTABLE="" ../	;\
 	make -j 4	;\
 	mv ./scap-workbench /scap-workbench-build
