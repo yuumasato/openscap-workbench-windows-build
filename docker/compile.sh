@@ -7,8 +7,8 @@ docker build -t "$IMGID" $(dirname "$0") && {
 		exit 1
 	}
 	docker cp "$CID:/scap-workbench-build" ./build
-	docker rm -f "$CID"
-	docker rmi -f "$IMGID"
+	#docker rm -f "$CID"
+	#docker rmi -f "$IMGID"
 	echo ""
 	echo "Build files are in "$(realpath ./build)""
 	exit 0
