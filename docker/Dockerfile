@@ -22,22 +22,26 @@ RUN cd openscap ; ./autogen.sh ; \
 	mingw32-configure --disable-probes --disable-python --disable-util-oscap-docker; \
 	make -j 4 ; make install
 
-
 RUN wget ${SSG} -O ssg.zip
 
 # Workbench
-RUN git clone https://github.com/mpreisler/mingw-bundledlls.git
+RUN git clone --depth 1 https://github.com/mpreisler/mingw-bundledlls.git
 RUN wget ${WORKBENCH} -O workbench.tar.gz
 
 RUN tar -xzf workbench.tar.gz	;\
 	mv scap-workbench* /scap-workbench
 
-ADD scap-workbench.wxs.in /scap-workbench/scap-workbench.wxs.in
-
 RUN cd scap-workbench*	;\
 	mkdir build/	;\
 	cd build/	;\
-	mingw32-cmake -D SCAP_WORKBENCH_LOCAL_SCAN_ENABLED=false -D SCAP_AS_RPM_EXECUTABLE="" ../	;\
+	mingw32-cmake \
+		-D SCAP_WORKBENCH_LOCAL_SCAN_ENABLED=false \
+		-D SCAP_AS_RPM_EXECUTABLE="" \
+		-D SSH_EXECUTABLE=ssh.exe \
+		-D NICE_EXECUTABLE="" \
+		-D SETSID_EXECUTABLE="" \
+		../	;\
+		sed 's;/scap-workbench/build/ssh.exe;ssh.exe;' -i Config.h	;\
 	make -j 4	;\
 	cd ..; mv ./build /scap-workbench-build; mv win32-LICENSE.rtf /scap-workbench-build
 
