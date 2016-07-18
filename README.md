@@ -31,6 +31,7 @@ Windows files will be in `./build*`
 -------------------------------
 - Run Windows and install [Wix toolset](http://wixtoolset.org/releases)
 - Copy `build` folder to a Windows folder
+- cd to `build/scap-workbench-build`
 - Run `createMsi.cmd`
 
 5. Check MSI
