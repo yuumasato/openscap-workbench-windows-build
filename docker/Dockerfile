@@ -1,14 +1,14 @@
-FROM fedora:23
+FROM fedora:25
 
-ENV SSG https://github.com/OpenSCAP/scap-security-guide/releases/download/v0.1.30/scap-security-guide-0.1.30.zip
-ENV WORKBENCH https://github.com/OpenSCAP/scap-workbench/archive/1.1.2.tar.gz
+ENV SSG https://github.com/OpenSCAP/scap-security-guide/releases/download/v0.1.31/scap-security-guide-0.1.31.zip
+ENV WORKBENCH https://github.com/OpenSCAP/scap-workbench/releases/download/1.1.4/scap-workbench-1.1.4.tar.bz2
 
 # Dependencies
 RUN dnf install -y mingw32-gcc mingw32-binutils mingw32-libxml2 \
 	mingw32-libgcrypt mingw32-pthreads mingw32-libxslt \
 	mingw32-curl mingw32-pcre mingw32-qt \
 	automake autoconf libtool \
-	wget make git \
+	wget bzip2 make git \
 	\
 	cmake asciidoctor \
 	\
@@ -26,9 +26,9 @@ RUN wget ${SSG} -O ssg.zip
 
 # Workbench
 RUN git clone --depth 1 https://github.com/mpreisler/mingw-bundledlls.git
-RUN wget ${WORKBENCH} -O workbench.tar.gz
+RUN wget ${WORKBENCH} -O workbench.tar.bz2
 
-RUN tar -xzf workbench.tar.gz	;\
+RUN tar -xjf workbench.tar.bz2	;\
 	mv scap-workbench* /scap-workbench
 
 RUN cd scap-workbench*	;\
