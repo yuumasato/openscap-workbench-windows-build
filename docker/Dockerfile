@@ -34,6 +34,7 @@ RUN tar -xjf workbench.tar.bz2	;\
 RUN cd scap-workbench*	;\
 	mkdir build/	;\
 	cd build/	;\
+	sed 's;include_next;include;' -i /usr/i686-w64-mingw32/sys-root/mingw/include/c++/cstdlib	;\
 	mingw32-cmake \
 		-D SCAP_WORKBENCH_LOCAL_SCAN_ENABLED=false \
 		-D SCAP_AS_RPM_EXECUTABLE="" \
